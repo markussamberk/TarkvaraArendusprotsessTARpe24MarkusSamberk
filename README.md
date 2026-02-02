@@ -1,0 +1,2 @@
+# TarkvaraArendusprotsessTARpe24MarkusSamberk
+TAAPleht ehk ainemapp
