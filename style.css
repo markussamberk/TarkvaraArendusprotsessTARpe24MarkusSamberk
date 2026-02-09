@@ -1,0 +1,248 @@
+/* =========================
+   RESET
+   ========================= */
+
+   * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, sans-serif;
+}
+
+/* =========================
+   COLOR VARIABLES
+   ========================= */
+
+:root {
+    --bg: #f5f7fb;
+    --card: #ffffff;
+    --text: #1f2933;
+    --accent: #6366f1;
+    --accent-soft: #e0e7ff;
+}
+
+body:has(#dark-toggle:checked) {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --text: #e5e7eb;
+    --accent: #818cf8;
+    --accent-soft: #1e293b;
+}
+
+/* =========================
+   BASE
+   ========================= */
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+/* =========================
+   DARK MODE TOGGLE (ROBUST)
+   ========================= */
+
+#dark-toggle {
+    display: none;
+}
+
+.toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+
+    width: 64px;
+    height: 34px;
+    padding: 4px;
+
+    background: var(--accent-soft);
+    border-radius: 999px;
+    cursor: pointer;
+
+    transition: background 0.3s ease;
+
+    /* THIS is the key */
+    position: fixed;
+    overflow: hidden;
+}
+
+/* Sun & moon using pseudo-elements */
+.toggle::before,
+.toggle::after {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.toggle::before {
+    content: "☀️";
+    left: 10px;
+    opacity: 1;
+}
+
+.toggle::after {
+    content: "🌙";
+    right: 10px;
+    opacity: 0;
+}
+
+/* Sliding ball */
+.toggle-ball {
+    width: 26px;
+    height: 26px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    transition: transform 0.35s ease;
+    position: relative;
+    z-index: 1;
+}
+
+/* Dark mode state */
+body:has(#dark-toggle:checked) .toggle {
+    background: var(--accent);
+}
+
+body:has(#dark-toggle:checked) .toggle-ball {
+    transform: translateX(30px);
+}
+
+body:has(#dark-toggle:checked) .toggle::before {
+    opacity: 0;
+}
+
+body:has(#dark-toggle:checked) .toggle::after {
+    opacity: 1;
+}
+
+/* =========================
+   CONTENT
+   ========================= */
+
+.container {
+    max-width: 900px;
+    margin: 80px auto;
+    background: var(--card);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+h1 {
+    margin-bottom: 16px;
+}
+
+h2 {
+    margin-bottom: 16px;
+    color: var(--accent);
+}
+
+.intro {
+    margin-bottom: 24px;
+    opacity: 0.85;
+}
+
+.subject-list {
+    list-style: none;
+    margin-bottom: 32px;
+}
+
+.subject-list li {
+    padding: 10px 14px;
+    margin-bottom: 10px;
+    background: var(--accent-soft);
+    border-radius: 8px;
+}
+
+.subject-list a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.2;
+    margin: 40px 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+body:has(#dark-toggle:checked) td {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+td:first-child {
+    font-weight: bold;
+    width: 30%;
+}
+
+img {
+    max-width: 120px;
+    border-radius: 12px;
+}
+.subject-list li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+table tr:hover td {
+    background: rgba(99, 102, 241, 0.1); /* use your accent color */
+}
+body {
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+/* Glow around headings in dark mode */
+body:has(#dark-toggle:checked) h1,
+body:has(#dark-toggle:checked) h2 {
+    text-shadow:
+    0 0 6px var(--accent),
+    0 0 12px rgba(129, 140, 248, 0.6),
+    0 0 18px rgba(129, 140, 248, 0.4);
+}
+
+/* Shimmering glow for headings in dark mode */
+body:has(#dark-toggle:checked) h1,
+body:has(#dark-toggle:checked) h2 {
+    text-shadow:
+        0 0 6px var(--accent),
+        0 0 12px rgba(129, 140, 248, 0.6),
+        0 0 18px rgba(129, 140, 248, 0.4);
+    animation: glowPulse 1.5s ease-in-out infinite alternate;
+}
+
+/* Glow pulse animation */
+@keyframes glowPulse {
+    from {
+        text-shadow:
+            0 0 4px var(--accent),
+            0 0 8px rgba(129, 140, 248, 0.5),
+            0 0 12px rgba(129, 140, 248, 0.3);
+    }
+    to {
+        text-shadow:
+            0 0 8px var(--accent),
+            0 0 16px rgba(129, 140, 248, 0.7),
+            0 0 24px rgba(129, 140, 248, 0.5);
+    }
+}
+
